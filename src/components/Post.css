@@ -1,0 +1,31 @@
+.post{
+    display: flex;
+    border:1px solid #fff;
+    padding:1rem 1rem;
+    margin-bottom:1rem;
+}
+.post-reaction{
+    border-right:1px solid #fff;
+    padding-right: 1rem;
+    margin-bottom:1rem;
+}
+.post-reaction-arrow{
+    height: 1.5rem;
+    color: #fff;
+}
+.post-reaction-text{
+    margin: 0;
+    font-size: 1rem;
+}
+.post-element{
+    padding: 0 1rem;
+}
+.post-element-header{
+    text-align: left;
+    font-size: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #fff;
+}
+.post-element-image{
+    width: 300px;
+}
