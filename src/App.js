@@ -11,8 +11,8 @@ function App() {
 
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App" >
+      <header className="App-header" style={{backgroundColor:'#000000'}}>
         <Post/>
         
       </header>

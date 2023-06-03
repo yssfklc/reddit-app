@@ -1,8 +1,12 @@
+
 .post{
     display: flex;
     border:1px solid #fff;
+    border-radius: 0.5rem;
     padding:1rem 1rem;
     margin-bottom:1rem;
+    background-color: #282c34;
+
 }
 .post-reaction{
     border-right:1px solid #fff;
@@ -18,14 +22,32 @@
     font-size: 1rem;
 }
 .post-element{
+    display: flex;
+    flex-direction: column;
     padding: 0 1rem;
+    
 }
 .post-element-header{
     text-align: left;
     font-size: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #fff;
+    
+    width: 20rem;
+    
 }
 .post-element-image{
-    width: 300px;
+    width: 100%;
+    align-self: center;
+}
+.post-element-data{
+    padding-top: .5rem;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.post-element-data a{
+    color: #fff;
+    text-decoration: none;
+    font-size: .9rem;
+
 }

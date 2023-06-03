@@ -1,35 +1,36 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {state} from '../state/state';
 import './Post.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faArrowUp, faArrowDown,faPerson,faComment } from '@fortawesome/free-solid-svg-icons'
+
 
 
 
 function Post(){
-    const url='https://www.reddit.com/r/popular.json';
+  const url='https://www.reddit.com/r/popular.json';
+  const [children, setChildren]=useState([]);
+  const [increment, setIncrement]=useState(0);
 
   const getData=()=>{
   const request=fetch(url).then(response=>{
       if(response.ok){
-          return response.json
+          return response.json();
       }
       throw new Error ('Request Failed!');
   }, networkError => console.log(networkError.message)
   ).then(jsonResponse=>{
-      console.log(jsonResponse)
+        setChildren(jsonResponse.data.children)
   })
   }
 
-  
-const numberOfPeopleRated=12;
-const [increment, setIncrement]=useState(0);
+
 
 const handleIncrease=(e)=>{
     e.preventDefault();
 setIncrement((prev)=>prev+1)
-getData();
+
 }
 const handleDecrease=(e)=>{
     e.preventDefault();
@@ -39,28 +40,41 @@ const handleDecrease=(e)=>{
 setIncrement((prev)=>prev-1)
 }
 
+
+
+useEffect(() => {
+    getData()
+    console.log(children)
+  }, [])
+    
+
+
 return (
     <div className="post-container">
-        
 
         {
-            state.map((item)=>{
+            children.map((item)=>{
                return  (<div className="post">
-                <div className="post-reaction">
-                    <a href='' onClick={handleIncrease}>
-                        <FontAwesomeIcon icon={faArrowUp} className='post-reaction-arrow'/>
-                    </a>   
-                <p className='post-reaction-text'>{increment}</p>
-                <a href='' onClick={handleDecrease}>
-                    <FontAwesomeIcon icon={faArrowDown} className='post-reaction-arrow'/>
-                </a>
-                
-                </div>
-                <div className="post-element">
-                    <h1 className='post-element-header'>{item.header}</h1>
-                    <img className='post-element-image' src={item.imgUrl} />
-                </div>
-                
+                    <div className="post-reaction">
+                        <a href='' >
+                            <FontAwesomeIcon icon={faArrowUp} className='post-reaction-arrow'/>
+                        </a>   
+                    <p className='post-reaction-text'>{item.data.ups+item.data.downs}</p>
+                    <a href='' >
+                        <FontAwesomeIcon icon={faArrowDown} className='post-reaction-arrow'/>
+                    </a>
+                    
+                    </div>
+                    <div className="post-element">
+                        <h1 className='post-element-header'>{item.data.title}</h1>
+                        {item.data.thumbnail!='self'?<img className='post-element-image' src={item.data.thumbnail}/>:null}
+                        <div className='post-element-data'>
+                            <a href=''><FontAwesomeIcon icon={faPerson} style={{paddingRight:'3px'}}/>{item.data.author}  </a>
+                            <a href=''><FontAwesomeIcon icon={faComment} style={{paddingRight: '3px'}}/>{item.data.num_comments}  </a>
+                            <a href=''> {Math.floor((1685818874-item.data.created_utc)/(60*60))} hours</a>
+
+                        </div>
+                    </div> 
                 </div>)
             })
         }
