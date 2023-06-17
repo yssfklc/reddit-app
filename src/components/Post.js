@@ -13,16 +13,31 @@ function Post(){
   const [children, setChildren]=useState([]);
   const [increment, setIncrement]=useState(0);
 
-  const getData=()=>{
-  const request=fetch(url).then(response=>{
-      if(response.ok){
-          return response.json();
-      }
-      throw new Error ('Request Failed!');
-  }, networkError => console.log(networkError.message)
-  ).then(jsonResponse=>{
-        setChildren(jsonResponse.data.children)
-  })
+//   const getData=()=>{
+//   const request=fetch(url).then(response=>{
+//       if(response.ok){
+//           return response.json();
+//       }
+//       throw new Error ('Request Failed!');
+//   }, networkError => console.log(networkError.message)
+//   ).then(jsonResponse=>{
+//         setChildren(jsonResponse.data.children)
+//   })
+//   }
+  const data=async()=>{
+    try{
+        const response=await fetch(url);
+        if(response.ok){
+            const data=await response.json();
+            setChildren(data.data.children);
+            
+        }else {
+            throw new Error('Request failed');
+        }
+
+    }catch(error){
+        console.log(error)
+    }
   }
 
 
@@ -43,8 +58,7 @@ setIncrement((prev)=>prev-1)
 
 
 useEffect(() => {
-    getData()
-    console.log(children)
+    data()
   }, [])
     
 
